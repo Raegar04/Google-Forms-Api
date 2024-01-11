@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApi", "GoogleFormsApi\GoogleFormsApi.csproj", "{C232FF62-E212-4BF8-B9BA-FE255FF3779F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B9E8FE37-CD47-419F-BD91-686F9596D74D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{555D476B-0A8E-4172-8DAD-98F76D50EB90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{93C6E8FA-F8B2-488D-A5EC-85A990787766}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C232FF62-E212-4BF8-B9BA-FE255FF3779F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C232FF62-E212-4BF8-B9BA-FE255FF3779F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C232FF62-E212-4BF8-B9BA-FE255FF3779F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C232FF62-E212-4BF8-B9BA-FE255FF3779F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9E8FE37-CD47-419F-BD91-686F9596D74D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9E8FE37-CD47-419F-BD91-686F9596D74D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9E8FE37-CD47-419F-BD91-686F9596D74D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9E8FE37-CD47-419F-BD91-686F9596D74D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{555D476B-0A8E-4172-8DAD-98F76D50EB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{555D476B-0A8E-4172-8DAD-98F76D50EB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{555D476B-0A8E-4172-8DAD-98F76D50EB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{555D476B-0A8E-4172-8DAD-98F76D50EB90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56B9B97C-C1E9-4EAE-AABE-F21544943ED9}
+	EndGlobalSection
+EndGlobal
