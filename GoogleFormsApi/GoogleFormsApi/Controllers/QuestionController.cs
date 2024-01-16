@@ -37,7 +37,7 @@ namespace GoogleFormsApi.Controllers
             }
 
             var mappedResult = result.Data.Select(_mapper.Map<QuestionResponse>);
-            return Ok(result.Data);
+            return Ok(mappedResult);
         }
 
         [HttpPost("{formId}")]

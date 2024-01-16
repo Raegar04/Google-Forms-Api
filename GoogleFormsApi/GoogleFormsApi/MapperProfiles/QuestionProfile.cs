@@ -14,6 +14,7 @@ namespace GoogleFormsApi.MapperProfiles
             CreateMap<AddQuestionRequest, Add.Command>();
             CreateMap<Add.Command, Question>();
             CreateMap<UpdateQuestionRequest, Update.Command>();
+            CreateMap<Update.Command, Question>();
         }
     }
 }

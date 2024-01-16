@@ -2,11 +2,11 @@
 
 namespace GoogleFormsApi.Responses
 {
-    public class QuestionResponse
+    public class UserFormResponse
     {
         public Guid Id { get; set; }
 
-        public string Description { get; set; }
+        public virtual Guid UserId { get; set; }
 
         public virtual Guid FormId { get; set; }
     }

@@ -25,6 +25,7 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddProfile<RegisterProfile>();
     cfg.AddProfile<FormProfile>();
     cfg.AddProfile<QuestionProfile>();
+    cfg.AddProfile<ResponseProfile>();
 });
 
 builder.Services.AddDbContext<GoogleFormsDbContext>(options =>

@@ -1,4 +1,8 @@
-﻿using Application.CQRS.Commands.FormActions;
+﻿using Application.CQRS.Commands.UserFormActions;
+using Application.CQRS.Queries.UserFormActions;
+using AutoMapper;
+using BLL.Helpers;
+using GoogleFormsApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,9 +14,28 @@ namespace GoogleFormsApi.Controllers
     {
         private readonly IMediator _mediator;
 
-        public UserFormController(IMediator mediator)
+        private readonly IMapper _mapper;
+
+        public UserFormController(IMediator mediator, IMapper mapper)
         {
             _mediator = mediator;
+            _mapper = mapper;
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUserForms()
+        {
+            var holderId = User.GetUserIdFromPrincipal();
+            var query = new Get.Query() { UserId = holderId };
+            var result = await _mediator.Send(query);
+            if (!result.Success)
+            {
+                return BadRequest(result.Message);
+            }
+
+            var mappedResult = result.Data.Select(_mapper.Map<UserFormResponse>);
+            return Ok(mappedResult);
         }
 
         [HttpDelete("{id}")]

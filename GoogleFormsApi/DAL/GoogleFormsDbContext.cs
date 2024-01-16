@@ -43,11 +43,11 @@ namespace Persistence
                 .HasForeignKey(r => r.QuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            builder.Entity<Response>()
-                .HasOne(r => r.UserForm)
-                .WithMany(uf => uf.Responses)
+            builder.Entity<UserForm>()
+                .HasMany(uf => uf.Responses)
+                .WithOne(r => r.UserForm)
                 .HasForeignKey(r => r.UserFormId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<UserForm>()
                 .HasOne(uf => uf.User)

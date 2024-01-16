@@ -38,14 +38,6 @@ namespace GoogleFormsApi.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsers()
-        {
-            var users = await _userManager.Users.Select(user=>user.UserName).ToListAsync();
-
-            return Ok(users);
-        }
-
         /// <summary>
         /// Register new user
         /// </summary>

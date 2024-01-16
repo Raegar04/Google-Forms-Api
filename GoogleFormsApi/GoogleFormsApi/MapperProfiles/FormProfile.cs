@@ -14,6 +14,7 @@ public class FormProfile : Profile
         CreateMap<Add.Command, Form>();
         CreateMap<Form, FormResponse>();
         CreateMap<UpdateFormRequest, Update.Command>();
+        CreateMap<Update.Command, Form>();
         CreateMap<AddFormRequest, Add.Command>();
     }
 }
