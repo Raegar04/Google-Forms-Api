@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApi", "GoogleFormsApi\GoogleFormsApi.csproj", "{C232FF62-E212-4BF8-B9BA-FE255FF3779F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleFormsApi", "GoogleFormsApi\GoogleFormsApi.csproj", "{C232FF62-E212-4BF8-B9BA-FE255FF3779F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B9E8FE37-CD47-419F-BD91-686F9596D74D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Core\Domain.csproj", "{B9E8FE37-CD47-419F-BD91-686F9596D74D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{555D476B-0A8E-4172-8DAD-98F76D50EB90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "DAL\Persistence.csproj", "{555D476B-0A8E-4172-8DAD-98F76D50EB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{93C6E8FA-F8B2-488D-A5EC-85A990787766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "BLL\Application.csproj", "{93C6E8FA-F8B2-488D-A5EC-85A990787766}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

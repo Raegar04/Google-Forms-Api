@@ -1,24 +1,30 @@
-using Core;
-using Core.Models;
+using BLL.Abstractions;
+using Domain.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Reflection;
 using System.Text;
+using Persistence;
+using DAL.Implementations;
+using Application.CQRS.Commands.FormActions;
+using GoogleFormsApi.MapperProfiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddProfile<MapperProfile>();
+    cfg.AddProfile<RegisterProfile>();
+    cfg.AddProfile<FormProfile>();
+    cfg.AddProfile<QuestionProfile>();
 });
 
 builder.Services.AddDbContext<GoogleFormsDbContext>(options =>
@@ -52,8 +58,18 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
      };
  });
 
-builder.Services.RegisterBLL();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<JwtHelper>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+});
+
+builder.Services.AddMediatR(cfg=>cfg.RegisterServicesFromAssembly(Assembly.GetAssembly(typeof(Update))));
 
 var app = builder.Build();
 
@@ -66,8 +82,26 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("AllowAll");
+
 app.UseAuthorization();
 
 app.MapControllers();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    try
+    {
+        var context = services.GetRequiredService<GoogleFormsDbContext>();
+        context.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError($"An error occurred while migrating or initializing the database. Exception: {ex.Message}");
+    }
+}
 
 app.Run();

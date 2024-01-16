@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models
+namespace Domain.Models
 {
     public class Question
     {
         public Guid Id { get; set; }
-
-        public int Index { get; set; }
 
         public string Description { get; set; }
 

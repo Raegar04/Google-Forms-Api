@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using Core.Models;
+using Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GoogleFormsApi.Controllers
 {
@@ -35,6 +36,14 @@ namespace GoogleFormsApi.Controllers
             _userManager = userManager;
             _jwtHelper = jwtHelper;
             _signInManager = signInManager;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var users = await _userManager.Users.Select(user=>user.UserName).ToListAsync();
+
+            return Ok(users);
         }
 
         /// <summary>

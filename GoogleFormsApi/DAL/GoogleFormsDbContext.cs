@@ -1,9 +1,9 @@
-﻿using Core.Models;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Domain.Models;
 
-namespace Core
+namespace Persistence
 {
     public class GoogleFormsDbContext : IdentityDbContext<AppUser, IdentityRole<Guid>, Guid>
     {

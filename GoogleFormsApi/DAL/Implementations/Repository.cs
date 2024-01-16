@@ -1,8 +1,7 @@
 ﻿using BLL.Abstractions;
 using BLL.Helpers;
-using Core;
-using Core.Models;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,12 +50,30 @@ namespace DAL.Implementations
             }
         }
 
+        public async Task<Result<bool>> AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            try
+            {
+                foreach (var item in entities)
+                {
+                    await _dbSet.AddAsync(item);
+                }
+
+                await _context.SaveChangesAsync();
+                return new Result<bool>(true);
+            }
+            catch (Exception ex)
+            {
+                return new Result<bool>(false, $"Cannot add items. {ex}");
+            }
+        }
+
         /// <summary>
         /// Delete entity
         /// </summary>
         /// <param name="id">Entity's to delete id</param>
         /// <returns>Indicating success and error message or result data</returns>
-        public async Task<Result<bool>> DeleteAsync(int id)
+        public async Task<Result<bool>> DeleteAsync(Guid id)
         {
             var entityToDelete = await _dbSet.FindAsync(id);
             if (entityToDelete == null)
@@ -107,7 +124,7 @@ namespace DAL.Implementations
         /// </summary>
         /// <param name="id">Searched entity's id</param>
         /// <returns>Indicating success and error message or result data</returns>
-        public async Task<Result<TEntity>> GetByIdAsync(int id)
+        public async Task<Result<TEntity>> GetByIdAsync(Guid id)
         {
             var result = await _dbSet.FindAsync(id);
             if (result is null)
@@ -124,7 +141,7 @@ namespace DAL.Implementations
         /// <param name="id">Searched entity's id</param>
         /// <param name="entity">Entity to update</param>
         /// <returns>Indicating success and error message or result data</returns>
-        public async Task<Result<bool>> UpdateAsync(int id, TEntity entity)
+        public async Task<Result<bool>> UpdateAsync(Guid id, TEntity entity)
         {
             try
             {

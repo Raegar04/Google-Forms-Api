@@ -25,7 +25,7 @@ namespace BLL.Abstractions
         /// </summary>
         /// <param name="id">Searched entity's id</param>
         /// <returns>Indicating success and error message or result data</returns>
-        Task<Result<TEntity>> GetByIdAsync(int id);
+        Task<Result<TEntity>> GetByIdAsync(Guid id);
 
         /// <summary>
         /// Add entity
@@ -40,14 +40,14 @@ namespace BLL.Abstractions
         /// <param name="id">Searched entity's id</param>
         /// <param name="entity">Entity to update</param>
         /// <returns>Indicating success and error message or result data</returns>
-        Task<Result<bool>> UpdateAsync(int id, TEntity entity);
+        Task<Result<bool>> UpdateAsync(Guid id, TEntity entity);
 
         /// <summary>
         /// Delete entity
         /// </summary>
         /// <param name="id">Entity's to delete id</param>
         /// <returns>Indicating success and error message or result data</returns>
-        Task<Result<bool>> DeleteAsync(int id);
+        Task<Result<bool>> DeleteAsync(Guid id);
 
         /// <summary>
         /// Delete entity
@@ -55,5 +55,7 @@ namespace BLL.Abstractions
         /// <param name="compositePkValues">Entity's composite primary key values to find it</param>
         /// <returns>Indicating success and error message or result data</returns>
         Task<Result<bool>> DeleteAsync(object[] compositePkValues);
+
+        Task<Result<bool>> AddRangeAsync(IEnumerable<TEntity> entities);
     }
 }

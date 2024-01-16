@@ -9,8 +9,10 @@
   <ItemGroup>
 	  <PackageReference Include="AutoMapper" Version="12.0.1" />
 	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+	  <PackageReference Include="MediatR" Version="12.2.0" />
 	  <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.14" />
 	  <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.14" />
+	  <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="7.0.15" />
 	  <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.14">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -21,12 +23,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BLL\BLL.csproj" />
-    <ProjectReference Include="..\Core\Core.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Responses\" />
+    <ProjectReference Include="..\BLL\Application.csproj" />
+    <ProjectReference Include="..\Core\Domain.csproj" />
+    <ProjectReference Include="..\DAL\Persistence.csproj" />
   </ItemGroup>
 
 </Project>

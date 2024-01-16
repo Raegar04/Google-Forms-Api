@@ -1,6 +1,5 @@
 ﻿using BLL.Abstractions;
-using Core;
-using Core.Models;
+using Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
