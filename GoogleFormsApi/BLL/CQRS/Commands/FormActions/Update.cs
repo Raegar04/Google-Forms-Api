@@ -1,6 +1,5 @@
-﻿using AutoMapper;
-using BLL.Abstractions;
-using BLL.Helpers;
+﻿using Application.Abstractions;
+using AutoMapper;
 using Domain.Models;
 using MediatR;
 using System;
@@ -13,7 +12,7 @@ namespace Application.CQRS.Commands.FormActions
 {
     public class Update
     {
-        public class Command : IRequest<Result<bool>>
+        public class Command : IRequest
         {
             public Guid Id { get; set; }
 
@@ -22,30 +21,24 @@ namespace Application.CQRS.Commands.FormActions
             public string Description { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<Form> _formRepository;
+            private readonly IFormService _service;
 
             private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
+            public Handler(IFormService service, IMapper mapper)
             {
-                _formRepository = unitOfWork.GetRepository<Form>();
+                _service = service;
                 _mapper = mapper;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var updatingFormResult = await _formRepository.GetByIdAsync(request.Id);
-                if (!updatingFormResult.Success)
-                {
-                    return new Result<bool>(false, updatingFormResult.Message);
-                }
-
-                var updated = updatingFormResult.Data;
+                var updated = await _service.GetByIdAsync(request.Id);
                 _mapper.Map(request, updated);
 
-                return await _formRepository.UpdateAsync(request.Id, updated);
+                await _service.UpdateAsync(updated);
             }
         }
     }

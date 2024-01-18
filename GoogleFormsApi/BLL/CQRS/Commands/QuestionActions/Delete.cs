@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using BLL.Abstractions;
+﻿using Application.Abstractions;
+using AutoMapper;
 using BLL.Helpers;
 using Domain.Models;
 using MediatR;
@@ -13,23 +13,23 @@ namespace Application.CQRS.Commands.QuestionActions
 {
     public class Delete
     {
-        public class Command : IRequest<Result<bool>>
+        public class Command : IRequest
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<Question> _repository;
+            private readonly IQuestionService _service;
 
-            public Handler(IUnitOfWork unitOfWork)
+            public Handler(IQuestionService service)
             {
-                _repository = unitOfWork.GetRepository<Question>();
+                _service = service;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                return await _repository.DeleteAsync(request.Id);
+                await _service.DeleteAsync(request.Id);
             }
         }
     }

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.Queries.FormActions
 {
-    public class Get
+    public class GetByHolder
     {
         public class Query : IRequest<IEnumerable<Form>>
         {
-            public Expression<Func<Form, bool>>? Predicate { get; set; }
+            public Guid HolderId { get; set; }
         }
 
         public class GetFormHandler : IRequestHandler<Query, IEnumerable<Form>>
@@ -29,7 +29,7 @@ namespace Application.CQRS.Queries.FormActions
 
             public Task<IEnumerable<Form>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _service.GetAllAsync(request.Predicate);
+                return _service.GetByHolder(request.HolderId);
             }
         }
     }

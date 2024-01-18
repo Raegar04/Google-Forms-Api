@@ -28,16 +28,12 @@ namespace GoogleFormsApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetForm([FromQuery] GetFormFilterRequest request)
+        public async Task<IActionResult> GetForms([FromQuery] GetFormFilterRequest request)
         {
             var query = new Get.Query() { Predicate = GetFormFilterExpression(request.Title, request.Description, request.HolderId)};
             var result = await _mediator.Send(query);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
 
-            var mappedResult = result.Data.Select(_mapper.Map<FormResponse>);
+            var mappedResult = result.Select(_mapper.Map<FormResponse>);
             return Ok(mappedResult);
         }
 
@@ -47,12 +43,8 @@ namespace GoogleFormsApi.Controllers
         {
             var query = new GetById.Query() { Id = id };
             var result = await _mediator.Send(query);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
 
-            var mappedResult = _mapper.Map<FormResponse>(result.Data);
+            var mappedResult = _mapper.Map<FormResponse>(result);
             return Ok(mappedResult);
         }
 
@@ -62,11 +54,7 @@ namespace GoogleFormsApi.Controllers
             var holderId = User.GetUserIdFromPrincipal();
             var command = _mapper.Map<Add.Command>(request);
             command.HolderId = holderId;
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }
@@ -76,11 +64,7 @@ namespace GoogleFormsApi.Controllers
         {
             var command = _mapper.Map<Update.Command>(request);
             command.Id = id;
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }
@@ -89,11 +73,7 @@ namespace GoogleFormsApi.Controllers
         public async Task<IActionResult> DeleteForm([FromRoute]Guid id)
         {
             var command = new Delete.Command() { Id = id };
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }

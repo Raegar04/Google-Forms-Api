@@ -7,25 +7,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.CQRS.Queries.QuestionActions
+namespace Application.CQRS.Queries.UserFormActions
 {
     public class GetByForm
     {
-        public class Query : IRequest<IEnumerable<Question>>
+        public class Query : IRequest<IEnumerable<UserForm>>
         {
             public Guid FormId { get; set; }
         }
 
-        public class GetByFormHandler : IRequestHandler<Query, IEnumerable<Question>>
+        public class GetByFormHandler : IRequestHandler<Query, IEnumerable<UserForm>>
         {
-            private readonly IQuestionService _service;
+            private readonly IUserFormService _service;
 
-            public GetByFormHandler(IQuestionService service)
+            public GetByFormHandler(IUserFormService service)
             {
                 _service = service;
             }
 
-            public Task<IEnumerable<Question>> Handle(Query request, CancellationToken cancellationToken)
+            public Task<IEnumerable<UserForm>> Handle(Query request, CancellationToken cancellationToken)
             {
                 return _service.GetByForm(request.FormId);
             }

@@ -1,5 +1,4 @@
-﻿using BLL.Abstractions;
-using BLL.Helpers;
+﻿using Application.Abstractions;
 using Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -13,7 +12,7 @@ namespace Application.CQRS.Commands.ResponseActions
 {
     public class AddRange
     {
-        public class Command : IRequest<Result<bool>> 
+        public class Command : IRequest
         {
             public List<Response> Answers { get; set; }
 
@@ -22,33 +21,29 @@ namespace Application.CQRS.Commands.ResponseActions
             public Guid UserId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<Response> _repository;
+            private readonly IResponseService _service;
 
-            private readonly IRepository<UserForm> _userFormRepository;
+            private readonly IUserFormService _userFormService;
 
-            public Handler(IUnitOfWork unitOfWork)
+            public Handler(IResponseService service, IUserFormService userFormService)
             {
-                _repository = unitOfWork.GetRepository<Response>();
-                _userFormRepository = unitOfWork.GetRepository<UserForm>();
+                _service = service;
+                _userFormService = userFormService;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             { 
                 var userFormId = Guid.NewGuid();
-                var addUserFormResult = await _userFormRepository.AddAsync(new UserForm { Id = userFormId, FormId = request.FormId, UserId = request.UserId });
-                if (!addUserFormResult.Success)
-                {
-                    return new Result<bool>(false, "Cannot establish connection between user and form");
-                }
+                await _userFormService.AddAsync(new UserForm { Id = userFormId, FormId = request.FormId, UserId = request.UserId });
 
                 for (var i = 0; i < request.Answers.Count; i++)
                 {
                     request.Answers[i].UserFormId = userFormId;
                 }
 
-                return await _repository.AddRangeAsync(request.Answers);
+                await _service.AddRangeAsync(request.Answers);
             }
         }
     }

@@ -29,11 +29,7 @@ namespace GoogleFormsApi.Controllers
         {
             var answers = request.Select(_mapper.Map<Response>);
             var authUserId = User.GetUserIdFromPrincipal();
-            var addResult = await _mediator.Send(new AddRange.Command { Answers = answers.ToList(), FormId = formId, UserId = authUserId });
-            if (!addResult.Success)
-            {
-                return BadRequest(addResult.Message);
-            }
+            await _mediator.Send(new AddRange.Command { Answers = answers.ToList(), FormId = formId, UserId = authUserId });
 
             return Ok();
         }

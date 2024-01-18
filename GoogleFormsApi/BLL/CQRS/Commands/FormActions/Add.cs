@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using BLL.Abstractions;
+﻿using Application.Abstractions;
+using AutoMapper;
 using BLL.Helpers;
 using Domain.Models;
 using MediatR;
@@ -13,7 +13,7 @@ namespace Application.CQRS.Commands.FormActions
 {
     public class Add
     {
-        public class Command : IRequest<Result<bool>>
+        public class Command : IRequest
         {
             public string Title { get; set; }
 
@@ -22,23 +22,23 @@ namespace Application.CQRS.Commands.FormActions
             public Guid HolderId { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<Form> _repository;
+            private readonly IFormService _service;
 
             private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
+            public Handler(IFormService service, IMapper mapper)
             {
-                _repository = unitOfWork.GetRepository<Form>();
+                _service = service;
                 _mapper = mapper;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             {
                 var form = _mapper.Map<Form>(request);
 
-                return await _repository.AddAsync(form);
+                await _service.AddAsync(form);
             }
         }
     }

@@ -31,12 +31,8 @@ namespace GoogleFormsApi.Controllers
         {
             var query = new GetByForm.Query() { FormId = formId };
             var result = await _mediator.Send(query);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
 
-            var mappedResult = result.Data.Select(_mapper.Map<QuestionResponse>);
+            var mappedResult = result.Select(_mapper.Map<QuestionResponse>);
             return Ok(mappedResult);
         }
 
@@ -45,11 +41,7 @@ namespace GoogleFormsApi.Controllers
         {
             var command = _mapper.Map<Add.Command>(request);
             command.FormId = formId;
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }
@@ -59,11 +51,7 @@ namespace GoogleFormsApi.Controllers
         {
             var command = _mapper.Map<Update.Command>(updateQuestionRequest);
             command.Id = id;
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }
@@ -72,11 +60,7 @@ namespace GoogleFormsApi.Controllers
         public async Task<IActionResult> DeleteQuestion([FromRoute] Guid id)
         {
             var command = new Delete.Command() { Id = id };
-            var result = await _mediator.Send(command);
-            if (!result.Success)
-            {
-                return BadRequest(result.Message);
-            }
+            await _mediator.Send(command);
 
             return Ok();
         }

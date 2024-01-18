@@ -1,4 +1,4 @@
-﻿using BLL.Abstractions;
+﻿using Application.Abstractions;
 using BLL.Helpers;
 using Domain.Models;
 using MediatR;
@@ -12,23 +12,23 @@ namespace Application.CQRS.Commands.UserFormActions
 {
     public class Delete
     {
-        public class Command : IRequest<Result<bool>>
+        public class Command : IRequest
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<UserForm> _repository;
+            private readonly IUserFormService _service;
 
-            public Handler(IUnitOfWork unitOfWork)
+            public Handler(IUserFormService service)
             {
-                _repository = unitOfWork.GetRepository<UserForm>();
+                _service = service;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                return await _repository.DeleteAsync(request.Id);
+                await _service.DeleteAsync(request.Id);
             }
         }
     }

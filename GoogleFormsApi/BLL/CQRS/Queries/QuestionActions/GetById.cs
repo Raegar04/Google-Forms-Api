@@ -9,25 +9,25 @@ using System.Threading.Tasks;
 
 namespace Application.CQRS.Queries.QuestionActions
 {
-    public class GetByForm
+    public class GetById
     {
-        public class Query : IRequest<IEnumerable<Question>>
+        public class Query : IRequest<Question?>
         {
-            public Guid FormId { get; set; }
+            public Guid Id { get; set; }
         }
 
-        public class GetByFormHandler : IRequestHandler<Query, IEnumerable<Question>>
+        public class GeFormByIdHandler : IRequestHandler<Query, Question?>
         {
             private readonly IQuestionService _service;
 
-            public GetByFormHandler(IQuestionService service)
+            public GeFormByIdHandler(IQuestionService service)
             {
                 _service = service;
             }
 
-            public Task<IEnumerable<Question>> Handle(Query request, CancellationToken cancellationToken)
+            public Task<Question?> Handle(Query request, CancellationToken cancellationToken)
             {
-                return _service.GetByForm(request.FormId);
+                return _service.GetByIdAsync(request.Id);
             }
         }
     }

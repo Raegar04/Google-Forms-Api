@@ -1,7 +1,5 @@
-﻿using AutoMapper;
-using BLL.Abstractions;
-using BLL.Helpers;
-using Domain.Models;
+﻿using Application.Abstractions;
+using AutoMapper;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -13,37 +11,31 @@ namespace Application.CQRS.Commands.QuestionActions
 {
     public class Update
     {
-        public class Command : IRequest<Result<bool>>
+        public class Command : IRequest
         {
             public Guid Id { get; set; }
 
             public string Description { get; set; }
         }
 
-        public class Handler : IRequestHandler<Command, Result<bool>>
+        public class Handler : IRequestHandler<Command>
         {
-            private readonly IRepository<Question> _repository;
+            private readonly IQuestionService _service;
 
             private readonly IMapper _mapper;
 
-            public Handler(IUnitOfWork unitOfWork, IMapper mapper)
+            public Handler(IQuestionService service, IMapper mapper)
             {
-                _repository = unitOfWork.GetRepository<Question>();
+                _service = service;
                 _mapper = mapper;
             }
 
-            public async Task<Result<bool>> Handle(Command request, CancellationToken cancellationToken)
+            public async Task Handle(Command request, CancellationToken cancellationToken)
             {
-                var updatingResult = await _repository.GetByIdAsync(request.Id);
-                if (!updatingResult.Success)
-                {
-                    return new Result<bool>(false, updatingResult.Message);
-                }
-
-                var updated = updatingResult.Data;
+                var updated = await _service.GetByIdAsync(request.Id);
                 _mapper.Map(request, updated);
 
-                return await _repository.UpdateAsync(request.Id, updated);
+                await _service.UpdateAsync(updated);
             }
         }
     }
