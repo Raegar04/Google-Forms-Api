@@ -97,6 +97,9 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Closed")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -104,15 +107,43 @@ namespace Persistence.Migrations
                     b.Property<Guid>("HolderId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("UpdatedByUserWithId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("HolderId");
 
                     b.ToTable("Forms");
+                });
+
+            modelBuilder.Entity("Domain.Models.Photo", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("IsMain")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Photos");
                 });
 
             modelBuilder.Entity("Domain.Models.Question", b =>
@@ -128,6 +159,12 @@ namespace Persistence.Migrations
                     b.Property<Guid>("FormId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserWithId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("FormId");
@@ -141,7 +178,13 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("QuestionId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("UpdatedByUserWithId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserFormId")
@@ -167,6 +210,12 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("FormId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("UpdatedByUserWithId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("UserId")
@@ -323,6 +372,17 @@ namespace Persistence.Migrations
                     b.Navigation("Holder");
                 });
 
+            modelBuilder.Entity("Domain.Models.Photo", b =>
+                {
+                    b.HasOne("Domain.Models.AppUser", "AppUser")
+                        .WithMany("Photos")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Domain.Models.Question", b =>
                 {
                     b.HasOne("Domain.Models.Form", "Form")
@@ -428,6 +488,8 @@ namespace Persistence.Migrations
                     b.Navigation("AssignedForms");
 
                     b.Navigation("HoldedForms");
+
+                    b.Navigation("Photos");
                 });
 
             modelBuilder.Entity("Domain.Models.Form", b =>

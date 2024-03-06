@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.StackExchangeRedis;
 
 namespace Persistence.Helpers
 {
@@ -16,6 +17,16 @@ namespace Persistence.Helpers
         public static void RegisterDbContext(this IServiceCollection services, Action<DbContextOptionsBuilder> options)
         {
             services.AddDbContext<GoogleFormsDbContext>(options);
+        }
+
+        public static void AddCache(this IServiceCollection services, Action<RedisCacheOptions>? options = null)
+        {
+            services.AddMemoryCache();
+
+            if (options != null)
+            {
+                services.AddStackExchangeRedisCache(options);
+            }
         }
 
         public static void RegisterServices(this IServiceCollection services)

@@ -1,7 +1,7 @@
 ﻿using Application.Abstractions;
 using AutoMapper;
-using BLL.Helpers;
 using Domain.Models;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -16,6 +16,8 @@ namespace Application.CQRS.Commands.FormActions
         public class Command : IRequest
         {
             public string Title { get; set; }
+
+            public bool Closed { get; set; }
 
             public string Description { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions;
 using Domain.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace Persistence.Implementations
 {
     public class QuestionService : GenericService<Question>, IQuestionService
     {
-        public QuestionService(GoogleFormsDbContext context) : base(context)
+        public QuestionService(GoogleFormsDbContext context, IHttpContextAccessor accessor) : base(context, accessor)
         {
         }
 

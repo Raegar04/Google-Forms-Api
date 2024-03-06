@@ -16,6 +16,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApi.IntegrationTesting", "GoogleFormsApi.IntegrationTesting\GoogleFormsApi.IntegrationTesting.csproj", "{EC387A12-26D0-4D86-832F-2DF945DC879C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApiUnitTests", "GoogleFormsApiUnitTests\GoogleFormsApiUnitTests.csproj", "{882FEEB3-651A-49B5-A278-8DFA6C1D579D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

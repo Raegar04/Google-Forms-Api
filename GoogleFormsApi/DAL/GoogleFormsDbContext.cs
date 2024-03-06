@@ -62,6 +62,11 @@ namespace Persistence
                 .HasForeignKey(uf => uf.FormId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            builder.Entity<AppUser>()
+                .HasMany(e => e.Photos)
+                .WithOne(e => e.AppUser)
+                .HasForeignKey(e => e.AppUserId);
+
             base.OnModelCreating(builder);
         }
 
@@ -72,5 +77,19 @@ namespace Persistence
         public DbSet<Response> Responses { get; set; }
 
         public DbSet<UserForm> UserForms { get; set; }
+
+        public DbSet<Photo> Photos { get; set; }
+
+        public async Task<int> SaveChangesAsync(Guid id)
+        {
+            var updates = ChangeTracker.Entries<ChangesTrackingEntity>().Where(x=>x.State==EntityState.Modified || x.State == EntityState.Added);
+            foreach (var item in updates)
+            {
+                item.Entity.LastUpdated = DateTime.Now;
+                item.Entity.UpdatedByUserWithId = id;
+            }
+
+            return await base.SaveChangesAsync();
+        }
     }
 }

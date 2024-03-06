@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Models
 {
-    public class Question
+    public class Question: ChangesTrackingEntity
     {
         public Guid Id { get; set; }
 

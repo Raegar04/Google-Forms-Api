@@ -18,6 +18,8 @@ namespace Application.CQRS.Commands.FormActions
 
             public string Title { get; set; }
 
+            public bool Closed { get; set; }
+
             public string Description { get; set; }
         }
 

@@ -1,10 +1,12 @@
 ﻿using Application.CQRS.Commands.UserFormActions;
 using Application.CQRS.Queries.UserFormActions;
+using Application.Helpers;
 using AutoMapper;
 using BLL.Helpers;
 using GoogleFormsApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Helpers;
 
 namespace GoogleFormsApi.Controllers
 {
@@ -34,15 +36,15 @@ namespace GoogleFormsApi.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById([FromRoute] Guid id)
-        {
-            var query = new GetById.Query() { Id = id };
-            var result = await _mediator.Send(query);
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> GetById([FromRoute] Guid id)
+        //{
+        //    var query = new GetById.Query() { Id = id };
+        //    var result = await _mediator.Send(query);
 
-            var mappedResult = _mapper.Map<UserFormResponse>(result);
-            return Ok(mappedResult);
-        }
+        //    var mappedResult = _mapper.Map<UserFormResponse>(result);
+        //    return Ok(mappedResult);
+        //}
 
         [HttpGet]
         [Route("{formId}")]

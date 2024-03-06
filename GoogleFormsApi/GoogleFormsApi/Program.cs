@@ -11,42 +11,50 @@ using GoogleFormsApi.MapperProfiles;
 using GoogleFormsApi.Middlewares;
 using GoogleFormsApi.Helpers;
 
-var builder = WebApplication.CreateBuilder(args);
-
-builder.RegisterServices();
-
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
+public class Program
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseMiddleware<AppExceptionHandlerMiddleware>();
-
-app.UseHttpsRedirection();
-
-app.UseCors("AllowAll");
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-
-    try
+    private static void Main(string[] args)
     {
-        var context = services.GetRequiredService<GoogleFormsDbContext>();
-        context.Database.Migrate();
-    }
-    catch (Exception ex)
-    {
-        var logger = services.GetRequiredService<ILogger<Program>>();
-        logger.LogError($"An error occurred while migrating or initializing the database. Exception: {ex.Message}");
+        var builder = WebApplication.CreateBuilder(args);
+
+        builder.RegisterServices();
+
+        var app = builder.Build();
+
+        if (app.Environment.IsDevelopment())
+        {
+            app.UseSwagger();
+            app.UseSwaggerUI();
+        }
+
+        app.UseMiddleware<AppExceptionHandlerMiddleware>();
+
+        app.UseHttpsRedirection();
+
+        app.UseCors("AllowAll");
+
+        app.UseAuthentication();
+
+        app.UseAuthorization();
+
+        app.MapControllers();
+
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+
+            try
+            {
+                var context = services.GetRequiredService<GoogleFormsDbContext>();
+                context.Database.Migrate();
+            }
+            catch (Exception ex)
+            {
+                var logger = services.GetRequiredService<ILogger<Program>>();
+                logger.LogError($"An error occurred while migrating or initializing the database. Exception: {ex.Message}");
+            }
+        }
+
+        app.Run();
     }
 }
-
-app.Run();

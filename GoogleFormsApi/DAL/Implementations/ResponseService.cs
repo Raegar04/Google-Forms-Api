@@ -1,5 +1,6 @@
 ﻿using Application.Abstractions;
 using Domain.Models;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace Persistence.Implementations
 {
     public class ResponseService : GenericService<Response>, IResponseService
     {
-        public ResponseService(GoogleFormsDbContext context) : base(context)
+        public ResponseService(GoogleFormsDbContext context, IHttpContextAccessor accessor) : base(context, accessor)
         {
         }
 

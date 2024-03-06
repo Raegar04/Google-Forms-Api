@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BLL.Helpers
+namespace Application.Helpers
 {
     public static class ManagePrincipalExtension
     {

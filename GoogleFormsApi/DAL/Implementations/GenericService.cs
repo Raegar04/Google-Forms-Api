@@ -1,5 +1,8 @@
 ﻿using Application.Abstractions;
+using Application.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,25 +12,36 @@ using System.Threading.Tasks;
 
 namespace Persistence.Implementations
 {
-    public class GenericService<TEntity> : IGenericService<TEntity> where TEntity : class
+    public abstract class GenericService<TEntity> : IGenericService<TEntity> where TEntity : class
     {
         private protected readonly GoogleFormsDbContext _context;
 
         private protected readonly DbSet<TEntity> _dbSet;
 
-        public GenericService(GoogleFormsDbContext context)
+        private readonly IHttpContextAccessor _accessor;
+
+        public GenericService(GoogleFormsDbContext context, IHttpContextAccessor accessor)
         {
             _context = context;
+            _accessor = accessor;
             _dbSet = context.Set<TEntity>();
         }
 
         public async virtual Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity);
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
         }
 
         public async virtual Task DeleteAsync(Guid id)
+        {
+            var item = await _dbSet.FindAsync(id);
+
+            _dbSet.Remove(item);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(object id)
         {
             var item = await _dbSet.FindAsync(id);
 
@@ -54,7 +68,15 @@ namespace Persistence.Implementations
         public async virtual Task UpdateAsync(TEntity entity)
         {
             _dbSet.Update(entity);
-            await _context.SaveChangesAsync();
+            await SaveChangesAsync();
+        }
+
+        private async Task<int> SaveChangesAsync()
+        {
+            var id = _accessor.HttpContext?.User.GetUserIdFromPrincipal();
+            ArgumentNullException.ThrowIfNull(id);
+
+            return await _context.SaveChangesAsync((Guid)id);
         }
     }
 }

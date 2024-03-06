@@ -1,5 +1,7 @@
 ﻿using Application.CQRS.Commands.FormActions;
 using Application.CQRS.Queries.FormActions;
+using Application.Helpers;
+using Application.Responses;
 using AutoMapper;
 using BLL.Helpers;
 using Domain.Models;
@@ -8,13 +10,14 @@ using GoogleFormsApi.Responses;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Persistence.Helpers;
 using System.Linq.Expressions;
 
 namespace GoogleFormsApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+    //[Authorize]
     public class FormController : Controller
     {
         private readonly IMediator _mediator;
@@ -27,6 +30,12 @@ namespace GoogleFormsApi.Controllers
             _mapper = mapper;
         }
 
+        [HttpGet("test")]
+        public async Task<IActionResult> Test() 
+        {
+            return Ok();
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetForms([FromQuery] GetFormFilterRequest request)
         {
@@ -37,14 +46,14 @@ namespace GoogleFormsApi.Controllers
             return Ok(mappedResult);
         }
 
-        [HttpGet]
-        [Route("{id}")]
+        [HttpGet("{id}")]
+        [ResponseCache(Location = ResponseCacheLocation.Any, Duration = 30)]
         public async Task<IActionResult> GetFormById([FromRoute] Guid id)
         {
             var query = new GetById.Query() { Id = id };
             var result = await _mediator.Send(query);
 
-            var mappedResult = _mapper.Map<FormResponse>(result);
+            var mappedResult = _mapper.Map<FormDetailsResponse>(result);
             return Ok(mappedResult);
         }
 

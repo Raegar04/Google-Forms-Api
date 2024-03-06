@@ -5,6 +5,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
+namespace BLL.Helpers;
     /// <summary>
     /// Helper to manage working with jwt tokens
     /// </summary>
@@ -46,7 +47,7 @@ using System.Text;
             var expires = DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:TokenValidityFromMinutes"]));
 
             var secToken = new JwtSecurityToken(_config["Jwt:Issuer"],
-              _config["Jwt:Issuer"],
+              _config["Jwt:Audience"],
               claims,
               expires: expires,
               signingCredentials: credentials);
