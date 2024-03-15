@@ -5,13 +5,6 @@
 		<ImplicitUsings>enable</ImplicitUsings>
 	</PropertyGroup>
 
-	<Target Name="OpenAPI" AfterTargets="Build" Condition="$(Configuration)=='Debug'">
-		<PropertyGroup>
-			<AssemblyFullPath>$([System.IO.Path]::GetFullPath($(MSBuildProjectDirectory)\$(OutDir)$(TargetFileName)))</AssemblyFullPath>
-		</PropertyGroup>
-		<Exec Command="swagger tofile --output openapi.yml --yaml $(AssemblyFullPath) v1" WorkingDirectory="$(SolutionDir)" />
-	</Target>
-
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="12.0.1" />
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
