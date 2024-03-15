@@ -26,3 +26,6 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
       working-directory: GoogleFormsApi
+    - name: Test
+      run: dotnet test --no-restore
+      working-directory: GoogleFormsApi
