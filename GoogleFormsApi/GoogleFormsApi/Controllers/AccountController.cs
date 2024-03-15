@@ -39,6 +39,13 @@ namespace GoogleFormsApi.Controllers
             _signInManager = signInManager;
         }
 
+        [HttpGet("IsLoggedInn")]
+        public async Task<IActionResult> IsLoggedInn(string name)
+        {
+            return Ok(User != null && User.Identity != null && User.Identity.IsAuthenticated);
+        }
+
+
         [HttpGet("IsLoggedIn")]
         public async Task<IActionResult> IsLoggedIn()
         {
