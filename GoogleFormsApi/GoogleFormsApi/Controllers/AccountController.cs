@@ -40,14 +40,14 @@ namespace GoogleFormsApi.Controllers
         }
 
         [HttpGet("IsLoggedInn")]
-        public async Task<IActionResult> IsLoggedInn(string name)
+        public IActionResult IsLoggedInn(string name)
         {
             return Ok(User != null && User.Identity != null && User.Identity.IsAuthenticated);
         }
 
 
         [HttpGet("IsLoggedIn")]
-        public async Task<IActionResult> IsLoggedIn()
+        public IActionResult IsLoggedIn()
         {
             return Ok(User != null && User.Identity != null && User.Identity.IsAuthenticated);
         }

@@ -49,7 +49,7 @@ namespace Persistence.Implementations.DistributedCachingServices
             return JsonSerializer.Deserialize<Form>(cached);
         }
 
-        public async Task<IEnumerable<Form>> GetByHolder(Guid holderId)
+        public Task<IEnumerable<Form>> GetByHolder(Guid holderId)
         {
             throw new NotImplementedException();
             //return await _memoryCache.GetOrCreateAsync(CachingConstants.FormsByHolderId(holderId), async entry =>
