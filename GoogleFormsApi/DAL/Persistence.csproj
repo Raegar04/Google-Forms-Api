@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
@@ -12,9 +12,9 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CloudinaryDotNet" Version="1.25.1" />
-		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="7.0.15" />
-		<PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+		<PackageReference Include="CloudinaryDotNet" Version="1.26.1" />
+		<PackageReference Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="8.0.3" />
+		<PackageReference Include="MongoDB.Driver" Version="2.24.0" />
 		<PackageReference Include="Scrutor.AspNetCore" Version="3.3.0" />
 	</ItemGroup>
 
