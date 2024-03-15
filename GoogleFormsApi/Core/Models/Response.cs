@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.Models
+namespace Domain.Models
 {
-    public class Response
+    public class Response: ChangesTrackingEntity
     { 
         public Guid Id { get; set; }
 

@@ -3,13 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34009.444
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApi", "GoogleFormsApi\GoogleFormsApi.csproj", "{C232FF62-E212-4BF8-B9BA-FE255FF3779F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GoogleFormsApi", "GoogleFormsApi\GoogleFormsApi.csproj", "{C232FF62-E212-4BF8-B9BA-FE255FF3779F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{B9E8FE37-CD47-419F-BD91-686F9596D74D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Core\Domain.csproj", "{B9E8FE37-CD47-419F-BD91-686F9596D74D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAL", "DAL\DAL.csproj", "{555D476B-0A8E-4172-8DAD-98F76D50EB90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Persistence", "DAL\Persistence.csproj", "{555D476B-0A8E-4172-8DAD-98F76D50EB90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BLL", "BLL\BLL.csproj", "{93C6E8FA-F8B2-488D-A5EC-85A990787766}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Application", "BLL\Application.csproj", "{93C6E8FA-F8B2-488D-A5EC-85A990787766}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7A3851CC-9DAA-4065-9850-1AD0F261739E}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApi.IntegrationTesting", "GoogleFormsApi.IntegrationTesting\GoogleFormsApi.IntegrationTesting.csproj", "{EC387A12-26D0-4D86-832F-2DF945DC879C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoogleFormsApiUnitTests", "GoogleFormsApiUnitTests\GoogleFormsApiUnitTests.csproj", "{882FEEB3-651A-49B5-A278-8DFA6C1D579D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +42,14 @@ Global
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{93C6E8FA-F8B2-488D-A5EC-85A990787766}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC387A12-26D0-4D86-832F-2DF945DC879C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{882FEEB3-651A-49B5-A278-8DFA6C1D579D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
