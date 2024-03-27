@@ -39,7 +39,7 @@ namespace GoogleFormsApi.Helpers
             });
 
             builder.Services.RegisterDbContext(options =>
-            options.UseLazyLoadingProxies(true).UseSqlServer(builder.Configuration.GetConnectionString("GoogleForms")));
+            options.UseLazyLoadingProxies(true).UseNpgsql(builder.Configuration.GetConnectionString("GoogleForms")));
 
             builder.Services.AddIdentity<AppUser, IdentityRole<Guid>>(options =>
             {
@@ -75,7 +75,7 @@ namespace GoogleFormsApi.Helpers
 
             builder.Services.AddScoped<BLL.Helpers.JwtHelper>();
 
-            builder.Services.AddCache();
+            builder.Services.AddCache(options=>options.Configuration = builder.Configuration.GetConnectionString("RedisCache"));
 
             builder.Services.RegisterServices();
 

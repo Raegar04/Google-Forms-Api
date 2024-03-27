@@ -1,8 +1,46 @@
 version: '3.4'
 
+networks:
+  dev:
+    driver: bridge
+
 services:
   googleformsapi:
     image: ${DOCKER_REGISTRY-}googleformsapi
+    depends_on:
+        - "google-forms.database"
+    container_name: googleformsapi
+    ports:
+        - "8080:80" 
     build:
-      context: .
-      dockerfile: GoogleFormsApi/Dockerfile
+        context: .
+        dockerfile: GoogleFormsApi/Dockerfile
+    environment:
+        - ConnectionStrings__GoogleForms=User ID=postgres;Password=postgres;Server=google-forms.database;Port=5432;Database=google-forms;
+        - ConnectionStrings__RedisCache=google-forms.cache:6379
+        - ASPNETCORE_URLS=http://+:80
+    networks:
+        - dev
+   
+  google-forms.database:
+      image: postgres:latest
+      container_name: google-forms.database
+      environment:
+        POSTGRES_DB : google-forms
+        POSTGRES_USER : postgres
+        POSTGRES_PASSWORD : postgres
+      ports:
+        - 5433:5432
+      volumes:
+        - "google-forms-db:/var/lib/postgresql/data"
+      networks:
+            - dev
+  
+  google-forms.cache:
+    image: redis:latest
+    restart: always
+    ports: 
+      - "6379:6379"
+
+volumes:
+    google-forms-db:

@@ -49,14 +49,25 @@ namespace Persistence.Implementations.DistributedCachingServices
             return JsonSerializer.Deserialize<Form>(cached);
         }
 
-        public Task<IEnumerable<Form>> GetByHolder(Guid holderId)
+        public async Task<IEnumerable<Form>> GetByHolder(Guid holderId)
         {
-            throw new NotImplementedException();
-            //return await _memoryCache.GetOrCreateAsync(CachingConstants.FormsByHolderId(holderId), async entry =>
-            //{
-            //    entry.SlidingExpiration = _duration;
-            //    return await _decorated.GetByHolder(holderId);
-            //});
+            var cached = await _distributedCache.GetStringAsync(CachingConstants.FormsByHolderId(holderId));
+            if (string.IsNullOrEmpty(cached))
+            {
+                var item = await _decorated.GetByHolder(holderId);
+                if (item != null)
+                {
+                    var serializedData = JsonSerializer.Serialize(item);
+                    await _distributedCache.SetStringAsync(CachingConstants.FormsByHolderId(holderId), serializedData, new DistributedCacheEntryOptions
+                    {
+                        SlidingExpiration = _duration
+                    });
+                }
+
+                return item;
+            }
+
+            return JsonSerializer.Deserialize<IEnumerable<Form>>(cached);
         }
 
         public async Task AddAsync(Form entity)
