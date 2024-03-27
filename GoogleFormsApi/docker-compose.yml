@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  googleformsapi:
+    image: ${DOCKER_REGISTRY-}googleformsapi
+    build:
+      context: .
+      dockerfile: GoogleFormsApi/Dockerfile

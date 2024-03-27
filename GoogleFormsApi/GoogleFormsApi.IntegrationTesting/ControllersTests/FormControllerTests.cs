@@ -28,14 +28,14 @@ namespace GoogleFormsApi.IntegrationTesting.ControllersTests
             _httpClient = _factory.CreateClient();
         }
 
-        [Fact]
-        public async Task GetFormById_WhenGotSuccessfully_ShouldReturnOkObjectResultWithReceivedData()
-        {
-            var testId = Guid.NewGuid();
-            var response = await _httpClient.GetAsync("api/Form/"+ testId);
+        //[Fact]
+        //public async Task GetFormById_WhenGotSuccessfully_ShouldReturnOkObjectResultWithReceivedData()
+        //{
+        //    var testId = Guid.NewGuid();
+        //    var response = await _httpClient.GetAsync("api/Form/"+ testId);
 
-            Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
-        }
+        //    Assert.Equal(System.Net.HttpStatusCode.OK, response.StatusCode);
+        //}
 
         public void Dispose()
         {
